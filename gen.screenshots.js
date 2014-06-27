@@ -59,18 +59,32 @@ p.create(function (ph) {
 		  var body = document.body;
 		  var content = body.firstChild;
 
-		  // Add php-style wrapper around parsoid output
+		  // Add php-style wrappers around parsoid output
 		  var div1 = document.createElement("div");
 		  div1.setAttribute("class", "mw-body");
 		  div1.setAttribute("id", "content");
 
+		  var div2 = document.createElement("div");
+		  div2.setAttribute("class", "mw-body-content");
+		  div2.setAttribute("id", "bodyContent");
+
+		  var div3 = document.createElement("div");
+		  div3.setAttribute("class", "mw-content-ltr");
+		  div3.setAttribute("id", "mw-content-text");
+
 		  // Migrate content into the div
 		  while (content) {
 			next = content.nextSibling;
-			div1.appendChild(content);
+			div3.appendChild(content);
 			content = next;
 		  }
+
+		  div2.appendChild(div3);
+		  div1.appendChild(div2);
 		  body.appendChild(div1);
+
+		  // Overwrite parsoid classes with php classes on body
+		  body.setAttribute("class", "mediawiki ltr sitedir-ltr");
 
 		  // Open navboxes
 		  $("table.collapsible tr").show();
