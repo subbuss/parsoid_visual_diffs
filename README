@@ -1,2 +1,5 @@
+* npm install
+* Add $PWD/node_modules/phantomjs/bin to PATH
+
 $ node gen.screenshots.js
 $ node gen.visual_diff.js | base64 -d > diff.jpg
