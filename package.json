@@ -1,0 +1,10 @@
+{
+	"name": "visual_diffs",
+	"description": "Visual Diffs for Parsoid",
+	"version": "0.0.1",
+	"dependencies": {
+		"phantom": "x.x",
+		"phantomjs": "~1.9",
+		"resemble" : "x.x"
+	}
+}
