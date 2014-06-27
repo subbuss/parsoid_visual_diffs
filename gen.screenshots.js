@@ -22,9 +22,15 @@ p.create(function (ph) {
 			$("div#mw-navigation").hide();
 			$("div#footer").hide();
 
-			// Hide top header + site byline
+			// Hide site notice and other anchors
+			$("a#top").hide();
+			$("div#siteNotice").hide();
+
+			// Hide top header + site byline + other non-display/navigational elts. not present in parsoid output.
 			$("h1.firstHeading").hide();
 			$("div#siteSub").hide();
+			$("div#contentSub").hide();
+			$("div#jump-to-nav").hide();
 
 			// Hide toc
 			$("div.toc").hide();
