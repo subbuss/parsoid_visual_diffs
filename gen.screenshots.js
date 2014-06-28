@@ -59,7 +59,7 @@ p.create(function (ph) {
 	page.set('viewportSize', { width: 1920, height: 1080 }, function (result) {
 	  console.log("Viewport set to: " + result.width + "x" + result.height);
 	});
-    page.open("http://parsoid-lb.eqiad.wikimedia.org/enwiki/Medha_Patkar?oldid=614077263", function (status) {
+    page.open("http://parsoid.wmflabs.org/enwiki/Medha_Patkar", function (status) {
 	  page.includeJs("http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js", function() {
 	    page.evaluate(function() {
 		  var body = document.body;
@@ -94,7 +94,11 @@ p.create(function (ph) {
 
 		  // Open navboxes
 		  $("table.collapsible tr").show();
-		});
+
+		  // Fix problem with parsoid css to reduce rendering diffs
+		  $('<style type="text/css">span.reference {line-height: 1;} sup,sub {line-height:1;}</style>').appendTo('head');
+		}
+		);
 
 	    page.render("mp.parsoid.png", function() {
 			console.warn("parsoid done!");
