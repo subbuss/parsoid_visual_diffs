@@ -5,6 +5,7 @@
 	"dependencies": {
 		"phantom": "x.x",
 		"phantomjs": "~1.9",
-		"resemble" : "x.x"
+		"resemble" : "x.x",
+		"yargs": "~1.2.1"
 	}
 }
