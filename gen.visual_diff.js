@@ -1,7 +1,5 @@
 var resemble = require('resemble').resemble,
 	c = require('./node_modules/resemble/node_modules/canvas/lib/canvas.js'),
-	sys = require('sys'),
-	exec = require('child_process').exec,
 	fs = require('fs'),
 	getopts = require('./getopts.js').getopts;
 
