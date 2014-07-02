@@ -1,3 +1,5 @@
+"use strict";
+
 var yargs = require('yargs');
 
 // This functionality copied from parsoid/lib/mediawiki.ParsoidConfig.js

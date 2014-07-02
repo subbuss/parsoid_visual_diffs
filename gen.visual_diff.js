@@ -1,3 +1,5 @@
+"use strict";
+
 var resemble = require('resemble').resemble,
 	c = require('./node_modules/resemble/node_modules/canvas/lib/canvas.js'),
 	fs = require('fs'),
@@ -34,6 +36,6 @@ if (opts !== null) {
 			var png_data = data.getImageDataUrl("").replace(/^data:image\/png;base64,/, '');
 			var png_buffer = new Buffer(png_data, 'base64');
 			var png_file = opts.outdir + prefix + ".diff.png";
-			fs.writeFileSync(out_png_file, png_buffer);
+			fs.writeFileSync(png_file, png_buffer);
 		});
 }

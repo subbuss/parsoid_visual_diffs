@@ -1,3 +1,5 @@
+"use strict";
+
 var p = require('phantom'),
     resemble = require('resemble').resemble;
 
