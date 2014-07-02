@@ -1,7 +1,4 @@
 * npm install
 * Add $PWD/node_modules/phantomjs/bin to PATH
-
-node gen.screenshots.js --help (to see options)
-node gen.visual_diff.js <prefix> (dumps <prefix>.diff.jpg to current directory)
-
-gen.visual_diff.js assumes that base64 is in /usr/bin/base64. To be cleaned up.
+* Run node gen.screenshots.js --help (to see options)
+* Run node gen.visual_diff.js --help (to see options)
