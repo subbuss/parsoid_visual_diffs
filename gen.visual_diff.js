@@ -17,16 +17,6 @@ var customOpts = {
 		'boolean': false,
 		'default': null,
 	},
-	'base64': {
-		description: 'Path of base64 executable',
-		'boolean': false,
-		'default': "/usr/bin/base64"
-	},
-	'tmpdir' : {
-		description: 'Tmp dir to write intermediate png data to',
-		'boolean': false,
-		'default': "/tmp/",
-	}
 };
 
 var opts = getopts(customOpts);
@@ -40,14 +30,12 @@ if (opts !== null) {
 		ignoreAntialiasing(). // <-- muy importante
 		onComplete(function(data){
 		    // analysis stats
-		    console.error("STATS: " + JSON.stringify(data));
+			console.error("STATS: " + JSON.stringify(data));
 
-		    // convert png data to a jpeg
-		    var png_data = data.getImageDataUrl("").replace(/^data:image\/png;base64,/, '');
-		    var png_file = opts.tmpdir + prefix + ".diff.png.data";
-		    var jpg_file = opts.outdir + prefix + ".diff.jpg";
-		    fs.writeFileSync(png_file, png_data, "utf8");
-		    function puts(error, stdout, stderr) { sys.puts(stdout); }
-		    exec(opts.base64 + " -d < " + png_file + " > " + jpg_file, puts);
+			// Save the base64 data
+			var png_data = data.getImageDataUrl("").replace(/^data:image\/png;base64,/, '');
+			var png_buffer = new Buffer(png_data, 'base64');
+			var png_file = opts.outdir + prefix + ".diff.png";
+			fs.writeFileSync(out_png_file, png_buffer);
 		});
 }
