@@ -9,14 +9,14 @@ var customOpts = {
 	'indir': {
 		description: 'Directory to get screenshots to? (default: ./<wiki>/)',
 		'boolean': false,
-		'default': null,
+		'default': null
 	},
 	'fileprefix': {
 		description: 'Prefix of files to get screenshots from and output diffs to?' +
 			'(default:  <title>.parsoid.png, <title>.php.png, <title>.diff.png)',
 		'boolean': false,
-		'default': null,
-	},
+		'default': null
+	}
 };
 
 var opts = getopts(customOpts);

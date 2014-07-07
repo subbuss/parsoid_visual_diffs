@@ -37,8 +37,8 @@ function takeScreenshots(opts, cb) {
 
 	  // PHP output
 	  ph.createPage(function (page) {
-		page.set('viewportSize', { width: 1920, height: 1080 }, function (result) {
-		  console.log("Viewport set to: " + result.width + "x" + result.height);
+		page.set('viewportSize', { width: opts.viewportWidth, height: opts.viewportHeight }, function (result) {
+		  console.warn("PHP viewport set to: " + result.width + "x" + result.height);
 		});
 		page.open(phpServer + title, function (status) {
 		  if (status !== "success") {
@@ -94,8 +94,8 @@ function takeScreenshots(opts, cb) {
 	  });
 
 	  ph.createPage(function (page) {
-		page.set('viewportSize', { width: 1920, height: 1080 }, function (result) {
-		  console.log("Viewport set to: " + result.width + "x" + result.height);
+		page.set('viewportSize', { width: opts.viewportWidth, height: opts.viewportHeight }, function (result) {
+		  console.warn("Parsoid viewport set to: " + result.width + "x" + result.height);
 		});
 		page.open(psdServer + wiki + "/" + title, function (status) {
 		  if (status !== "success") {
@@ -105,7 +105,7 @@ function takeScreenshots(opts, cb) {
 			  return;
 		  }
 		  page.includeJs("http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js", function() {
-			page.evaluate(function() {
+			page.evaluate(function(dumpOutput) {
 			  var body = document.body;
 			  var content = body.firstChild;
 
@@ -141,7 +141,19 @@ function takeScreenshots(opts, cb) {
 
 			  // Fix problem with parsoid css to reduce rendering diffs
 			  $('<style type="text/css">span.reference {line-height: 1;} sup,sub {line-height:1;}</style>').appendTo('head');
-			}
+
+			  if (dumpOutput) {
+				  var header = document.head.innerHTML.replace(/href="\/\//g, 'href="http://');
+			  	  return "<!DOCTYPE html>\n<html><head>" + header + "</head>" + document.body.outerHTML;
+			  } else {
+				  return "";
+			  }
+			}, function(result) {
+				if (opts.dumpParsoidHTML) {
+					console.log(result);
+				}
+			},
+			opts.dumpParsoidHTML
 			);
 
 			page.render(outdir + prefix + ".parsoid.png", function() {

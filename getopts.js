@@ -23,6 +23,8 @@ wikipedias.split('|').forEach(function(lang) {
 			wikiBaseUrl[dbLangPrefix + 'wiki' + suffix] = 'http://' +
 				lang + '.wiki' + suffix + '.org/wiki/';
 		});
+
+	wikiBaseUrl["mediawikiwiki"] = 'http://www.mediawiki.org/wiki/';
 });
 
 var standardOpts = {
