@@ -1,4 +1,10 @@
 * npm install
 * Add $PWD/node_modules/phantomjs/bin to PATH
+
+Either:
 * Run node gen.screenshots.js --help (to see options)
 * Run node diff.screenshots.js --help (to see options)
+
+OR:
+
+* Run node gen.visual_diff.js --help (to see options)
