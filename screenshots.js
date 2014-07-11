@@ -1,19 +1,20 @@
 "use strict";
 
 var p = require('phantom'),
-    resemble = require('resemble').resemble;
+    resemble = require('resemble').resemble,
+	fs = require('fs');
 
-function takeScreenshots(opts, cb) {
+function takeScreenshots(opts, logger, cb) {
 	var phpServer = opts.phpServer;
 	if (!phpServer) {
-		console.warn("Unknown PHP server to generate PHP parser html screenshot");
-		cb();
+		cb("Unknown PHP server to generate PHP parser html screenshot");
+		return;
 	}
 
 	var psdServer = opts.parsoidServer;
 	if (!psdServer) {
-		console.warn("Unknown Parsoid server to generate Parsoid parser html screenshot");
-		cb();
+		cb("Unknown Parsoid server to generate Parsoid parser html screenshot");
+		return;
 	}
 
 	var wiki = opts.wiki;
@@ -23,9 +24,15 @@ function takeScreenshots(opts, cb) {
 
 	var phpDone = false;
 	var parsoidDone = false;
+	var phpErr = null;
+	var parsoidErr = null;
 	var browser;
 
 	function testCompletion(browser, cb) {
+		if (phpErr || parsoidErr) {
+			browser.exit();
+			cb(phpErr || parsoidErr);
+		}
 		if (phpDone && parsoidDone) {
 			browser.exit();
 			cb();
@@ -38,11 +45,11 @@ function takeScreenshots(opts, cb) {
 	  // PHP output
 	  ph.createPage(function (page) {
 		page.set('viewportSize', { width: opts.viewportWidth, height: opts.viewportHeight }, function (result) {
-		  console.warn("PHP viewport set to: " + result.width + "x" + result.height);
+		  logger("PHP viewport set to: " + result.width + "x" + result.height);
 		});
 		page.open(phpServer + title, function (status) {
 		  if (status !== "success") {
-			  console.warn("Couldn't open page " + phpServer + title + ". Got result " + status);
+			  phpErr = "Couldn't open page " + phpServer + title + ". Got result " + status;
 			  phpDone = true;
 			  testCompletion(browser, cb);
 			  return;
@@ -85,7 +92,7 @@ function takeScreenshots(opts, cb) {
 				$("span.collapseButton").hide();
 			});
 			page.render(outdir + prefix + ".php.png", function() {
-				console.warn("php done!");
+				logger("php done!");
 				phpDone = true;
 			    testCompletion(browser, cb);
 			});
@@ -95,11 +102,11 @@ function takeScreenshots(opts, cb) {
 
 	  ph.createPage(function (page) {
 		page.set('viewportSize', { width: opts.viewportWidth, height: opts.viewportHeight }, function (result) {
-		  console.warn("Parsoid viewport set to: " + result.width + "x" + result.height);
+		  logger("Parsoid viewport set to: " + result.width + "x" + result.height);
 		});
 		page.open(psdServer + wiki + "/" + title, function (status) {
 		  if (status !== "success") {
-			  console.warn("Couldn't open page " + psdServer + wiki + "/" + title + ". Got result " + status);
+			  parsoidErr = "Couldn't open page " + psdServer + wiki + "/" + title + ". Got result " + status;
 			  parsoidDone = true;
 			  testCompletion(browser, cb);
 			  return;
@@ -150,14 +157,16 @@ function takeScreenshots(opts, cb) {
 			  }
 			}, function(result) {
 				if (opts.dumpParsoidHTML) {
-					console.log(result);
+					var prefix = opts.prefix;
+					var dir    = (opts.outdir || "./" + opts.wiki + "/").replace(/\/$/, '') + "/";
+					fs.writeFileSync(dir + prefix + ".parsoid.html", result);
 				}
 			},
 			opts.dumpParsoidHTML
 			);
 
 			page.render(outdir + prefix + ".parsoid.png", function() {
-				console.warn("parsoid done!");
+				logger("parsoid done!");
 				parsoidDone = true;
 			    testCompletion(browser, cb);
 			});

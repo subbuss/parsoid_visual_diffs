@@ -24,26 +24,49 @@ var customOpts = {
 	},
 };
 
-var opts = getopts(customOpts);
-if (opts !== null) {
+function genVisualDiff(opts, logger, cb) {
 	var prefix = opts.prefix;
 	var dir    = (opts.outdir || "./" + opts.wiki + "/").replace(/\/$/, '') + "/";
 	var phpSS  = dir + prefix + ".php.png";
 	var psdSS  = dir + prefix + ".parsoid.png";
 
-	takeScreenshots(opts, function() {
-		console.warn("--screenshotting done--");
-		resemble(phpSS).compareTo(psdSS).
-			ignoreAntialiasing(). // <-- muy importante
-			onComplete(function(data){
-				// analysis stats
-				console.error("STATS: " + JSON.stringify(data));
-
-				// Save the base64 data
-				var png_data = data.getImageDataUrl("").replace(/^data:image\/png;base64,/, '');
-				var png_buffer = new Buffer(png_data, 'base64');
-				var png_file = dir + prefix + ".diff.png";
-				fs.writeFileSync(png_file, png_buffer);
-			});
+	takeScreenshots(opts, logger, function(err) {
+		if (err) {
+			logger(err);
+			cb(err, null);
+		} else {
+			if (logger) {
+				logger("--screenshotting done--");
+			}
+			resemble(phpSS).compareTo(psdSS).
+				ignoreAntialiasing(). // <-- muy importante
+				onComplete(function(data){
+					cb(null, data);
+				});
+		}
 	});
+}
+
+var opts = getopts(customOpts);
+if (opts !== null) {
+	genVisualDiff(opts, function(msg) {
+		console.log(msg);
+	}, function(err, data) {
+		if (!err) {
+			// analysis stats
+			console.error("STATS: " + JSON.stringify(data));
+
+			// Save the base64 data
+			var prefix = opts.prefix;
+			var dir = (opts.outdir || "./" + opts.wiki + "/").replace(/\/$/, '') + "/";
+			var png_data = data.getImageDataUrl("").replace(/^data:image\/png;base64,/, '');
+			var png_buffer = new Buffer(png_data, 'base64');
+			var png_file = dir + prefix + ".diff.png";
+			fs.writeFileSync(png_file, png_buffer);
+		}
+	});
+}
+
+if ( typeof module === 'object' ) {
+	module.exports.genVisualDiff = genVisualDiff;
 }

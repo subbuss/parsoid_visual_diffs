@@ -23,7 +23,13 @@ var customOpts = {
 
 var opts = getopts(customOpts);
 if (opts !== null) {
-	takeScreenshots(opts, function() {
-		console.warn("--all done--");
-	});
+	takeScreenshots(opts, function(msg) {
+			console.log(msg);
+		}, function(err) {
+			if (err) {
+				console.warn(err);
+			} else {
+				console.warn("--all done--");
+			}
+		});
 }
