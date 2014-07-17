@@ -6,7 +6,7 @@ var resemble = require('resemble').resemble,
 
 var customOpts = {
 	'indir': {
-		description: 'Directory to get screenshots from? (default: ./<wiki>/)',
+		description: 'Directory to get screenshots from? (default: .)',
 		'boolean': false,
 		'default': null
 	},
@@ -21,7 +21,7 @@ var customOpts = {
 var opts = Util.getopts(customOpts);
 if (opts !== null) {
 	var prefix = opts.prefix;
-	var indir = (opts.indir || "./" + opts.wiki + "/").replace(/\/$/, '') + "/";
+	var indir = (opts.indir || ".").replace(/\/$/, '') + "/" + opts.wiki + "/";
 	var phpSS = indir + prefix + ".php.png";
 	var psdSS = indir + prefix + ".parsoid.png";
 
