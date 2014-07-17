@@ -1,13 +1,12 @@
 "use strict";
 
 var resemble = require('resemble').resemble,
-	c = require('./node_modules/resemble/node_modules/canvas/lib/canvas.js'),
 	fs = require('fs'),
-	getopts = require('./getopts.js').getopts;
+	Util = require('../lib/differ.utils.js').Util;
 
 var customOpts = {
 	'indir': {
-		description: 'Directory to get screenshots to? (default: ./<wiki>/)',
+		description: 'Directory to get screenshots from? (default: ./<wiki>/)',
 		'boolean': false,
 		'default': null
 	},
@@ -19,14 +18,14 @@ var customOpts = {
 	}
 };
 
-var opts = getopts(customOpts);
+var opts = Util.getopts(customOpts);
 if (opts !== null) {
 	var prefix = opts.prefix;
 	var indir = (opts.indir || "./" + opts.wiki + "/").replace(/\/$/, '') + "/";
 	var phpSS = indir + prefix + ".php.png";
 	var psdSS = indir + prefix + ".parsoid.png";
 
-	resemble(phpSS).compareTo(psdSS).
+	resemble(opts.phpScreenShot).compareTo(opts.psdScreenShot).
 		ignoreAntialiasing(). // <-- muy importante
 		onComplete(function(data){
 		    // analysis stats

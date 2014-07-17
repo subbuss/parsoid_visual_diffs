@@ -1,7 +1,7 @@
 "use strict";
 
-var getopts = require('./getopts.js').getopts,
-	takeScreenshots = require('./screenshots.js').takeScreenshots;
+var Util = require('../lib/differ.utils.js').Util,
+	Differ = require('../lib/differ.js').VisualDiffer;
 
 var customOpts = {
 	'viewportWidth': {
@@ -21,9 +21,9 @@ var customOpts = {
 	},
 };
 
-var opts = getopts(customOpts);
+var opts = Util.getopts(customOpts);
 if (opts !== null) {
-	takeScreenshots(opts, function(msg) {
+	Differ.takeScreenshots(opts, function(msg) {
 			console.log(msg);
 		}, function(err) {
 			if (err) {
