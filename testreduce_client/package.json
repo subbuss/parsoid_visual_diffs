@@ -1,0 +1,8 @@
+{
+	"name": "visual_diff_client",
+	"description": "Client for running visual diffs for a specific title",
+	"version": "0.0.1",
+	"dependencies": {
+		"request": "~2.34.0"
+	}
+}

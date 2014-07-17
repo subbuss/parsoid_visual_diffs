@@ -1,0 +1,6 @@
+* This is a testreduce client script.
+  - Code copied form parsoid codebase and adapted.
+
+* It receives wiki titles from a testreduce server and
+  runs visual diffs on them that compares PHP parser rendering
+  and Parsoid rendering and post results back to the server.
