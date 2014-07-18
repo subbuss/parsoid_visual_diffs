@@ -7,7 +7,6 @@ var http = require( 'http' ),
 	qs = require( 'querystring' ),
 	exec = require( 'child_process' ).exec,
 	config = require( process.argv[2] || './config.js' ),
-	opts = config.opts,
 	Util = require('../lib/differ.utils.js').Util,
 	Differ = require('../lib/differ.js').VisualDiffer;
 
@@ -41,6 +40,40 @@ Util.retryingHTTPRequest = function (retries, requestOptions, cb) {
 		};
 
 	request(requestOptions, errHandler);
+};
+
+// deep clones by default.
+Util.clone = function(obj, deepClone) {
+	if (deepClone === undefined) {
+		deepClone = true;
+	}
+	if ( Array.isArray(obj) ) {
+		if ( deepClone ) {
+			return obj.map(function(el) {
+				return Util.clone(el, true);
+			});
+		} else {
+			return obj.slice();
+		}
+	} else if ( obj instanceof Object && // only "plain objects"
+				Object.getPrototypeOf(obj) === Object.prototype) {
+		/* This definition of "plain object" comes from jquery,
+		 * via zepto.js.  But this is really a big hack; we should
+		 * probably put a console.assert() here and more precisely
+		 * delimit what we think is legit to clone. (Hint: not
+		 * tokens or DOM trees.) */
+		var nobj = {};
+		if ( deepClone ) {
+			return Object.keys(obj).reduce(function(nobj, key) {
+				nobj[key] = Util.clone(obj[key], true);
+				return nobj;
+			}, nobj);
+		} else {
+			return Object.assign(nobj, obj);
+		}
+	} else {
+		return obj;
+	}
 };
 
 var getTitle = function( cb ) {
@@ -99,7 +132,7 @@ function encodeAttribute (str) {
 		.replace(/"/g, '&quot;');
 }
 
-var jsonFormat = function(err, diffData) {
+var jsonFormat = function(opts, err, diffData) {
 	var out = {
 		prefix: opts.wiki,
 		title: opts.title
@@ -117,9 +150,11 @@ var jsonFormat = function(err, diffData) {
 };
 
 var runTest = function(cb, test) {
-	var logger = opts.quiet ? function(){} : function(msg) { console.log(msg); };
+	var logger = config.opts.quiet ? function(){} : function(msg) { console.log(msg); };
 
 	try {
+		// Make a copy
+		var opts = Util.clone(config.opts);
 		opts.wiki = test.prefix;
 		opts.title = test.title;
 		opts = Util.computeOpts(opts);
@@ -129,13 +164,13 @@ var runTest = function(cb, test) {
 				if (err) {
 					console.error( "ERROR for " + test.prefix + ':' + test.title + ': ' + err );
 				}
-				cb( 'postResult', jsonFormat(err, diffData), test, null );
+				cb( 'postResult', jsonFormat(opts, err, diffData), test, null );
 			}
 		);
 	} catch (err) {
 		console.error( "ERROR in " + test.prefix + ':' + test.title + ': ' + err );
 		console.error( "stack trace: " + err.stack);
-		cb( 'postResult', jsonFormat(err), test, function() { process.exit( 1 ); } );
+		cb( 'postResult', jsonFormat(opts, err), test, function() { process.exit( 1 ); } );
 	}
 };
 
