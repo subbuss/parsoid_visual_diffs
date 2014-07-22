@@ -1,0 +1,15 @@
+"use strict";
+
+if ( typeof module === 'object' ) {
+	module.exports = {
+		parsoidServer: "http://localhost:8000",
+		viewportWidth: 1920,
+		viewportHeight: 1080,
+		dumpParsoidHTML: false,
+		wiki: "enwiki",
+		title: "Main_Page",
+		filePrefix: null,
+		quiet: true,
+		outdir: "pngs"
+	};
+}
