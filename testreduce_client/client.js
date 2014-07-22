@@ -4,7 +4,7 @@
 var http = require( 'http' ),
 	request = require('request'),
 	cluster = require('cluster'),
-	qs = require( 'querystring' ),
+	fs = require('fs'),
 	exec = require( 'child_process' ).exec,
 	config = require( process.argv[2] || './config.js' ),
 	Util = require('../lib/differ.utils.js').Util,
@@ -144,6 +144,13 @@ var jsonFormat = function(opts, err, diffData) {
 		out.fails = Math.floor(diffData.misMatchPercentage);
 		out.skips = Math.round((diffData.misMatchPercentage - out.fails)*100);
 		out.time = diffData.analysisTime;
+
+		// Save the base64 data
+		if (config.opts.dumpDiffs) {
+			var png_data = diffData.getImageDataUrl("").replace(/^data:image\/png;base64,/, '');
+			var png_buffer = new Buffer(png_data, 'base64');
+			fs.writeFileSync(opts.diffFile, png_buffer);
+		}
 	}
 
 	return out;
