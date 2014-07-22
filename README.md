@@ -1,18 +1,19 @@
-* npm install
-* Add $PWD/node_modules/phantomjs/bin to PATH
+## Install/setup
 
-== Commandline ==
+* npm install
+* Add $PWD/node_modules/phantomjs/bin to $PATH
+
+## Commandline
 bin/ has some commandline scripts to generating diffs
 
-Either:
-* Run node bin/gen.screenshots.js --help (to see options)
-* Run node bin/diff.screenshots.js --help (to see options)
+Either use the following scripts
+  node bin/gen.screenshots.js --help
+  node bin/diff.screenshots.js --help
 
-OR:
+OR this script
+  node bin/gen.visual_diff.js --help
 
-* Run node bin/gen.visual_diff.js --help (to see options)
-
-== Testreduce client ==
+## Testreduce client
 
 testreduce/ has client scripts and example config for
 mass testing of visual diffs by getting titles from a testreduce
@@ -20,7 +21,7 @@ server.
 
 There is an example testreduce server settings file there as well.
 
-== Diff server ==
+## Diff server
 
 Thin server for generating diffs to be used in combination with
 testreduce server to look at diffs (since the server doesn't have
