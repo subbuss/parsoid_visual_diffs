@@ -189,19 +189,28 @@ var getGitCommit = function( cb ) {
 
 	if ( !lastCommitCheck || ( now - lastCommitCheck ) > ( 5 * 60 * 1000 ) ) {
 		lastCommitCheck = now;
-		exec( 'git log --max-count=1 --pretty=format:"%H %ci"', { cwd: repoPath }, function ( err, data ) {
-			var cobj = data.match( /^([^ ]+) (.*)$/ );
-			if (!cobj) {
-				console.log("Error, couldn't find the current commit");
+		var psdServer = Util.computeOpts(config.opts).parsoidServer;
+		var requestOptions = { uri: psdServer + "_version", method: 'GET' };
+		Util.retryingHTTPRequest(10, requestOptions, function(error, response, body) {
+			if (error || !response) {
+				console.log("Error couldn't find the current commit from " + psdServer);
 				cb(null, null);
+			} else if (response.statusCode === 200) {
+				try {
+					var resp = JSON.parse( body );
+					lastCommit = resp.sha;
+					lastCommitTime = (new Date()).toISOString();
+					cb(lastCommit, lastCommitTime);
+				} catch (e) {
+					console.log("Got response: " + body + " from " + requestOptions.uri);
+					console.log("Error extracing commit SHA from it: " + e);
+					cb(null, null);
+				}
 			} else {
-				lastCommit = cobj[1];
-				// convert the timestamp to UTC
-				lastCommitTime = new Date(cobj[2]).toISOString();
-				//console.log( 'New commit: ', cobj[1], lastCommitTime );
-				cb(cobj[1], lastCommitTime);
+				console.log(requestOptions.uri + " responded with a HTTP status " + response.statusCode);
+				cb(null, null);
 			}
-		} );
+		});
 	} else {
 		cb( lastCommit, lastCommitTime );
 	}
