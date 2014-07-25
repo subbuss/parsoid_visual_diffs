@@ -1,5 +1,8 @@
 ## Install/setup
 
+* Install dependencies
+  See https://github.com/Automattic/node-canvas/wiki/Installation---Ubuntu
+
 * npm install
 * Add $PWD/node_modules/phantomjs/bin to $PATH
 
