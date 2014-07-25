@@ -19,6 +19,7 @@ var opts = yargs.usage( 'Usage: $0 [connection parameters]' )
 	} )
 	.options( 'P', {
 		alias: 'port',
+		'default': 8001,
 		describe: 'Port number to use for connection.'
 	} );
 
@@ -94,6 +95,6 @@ app.get(/^\/diff\/([^/]*)\/(.*)/, function(req, res) {
 });
 
 // Start the app
-app.listen( 8001 );
+app.listen( argv.port );
 
 }() );
