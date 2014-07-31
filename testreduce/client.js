@@ -193,7 +193,7 @@ var getGitCommit = function( cb ) {
 		var psdServer = Util.computeOpts(opts).parsoidServer;
 		var requestOptions = {
 			uri: psdServer + "_version",
-			proxy: process.env.HTTP_PROXY_IP_AND_PORT,
+			proxy: process.env.HTTP_PROXY_IP_AND_PORT || "",
 			method: 'GET'
 		};
 		Util.retryingHTTPRequest(10, requestOptions, function(error, response, body) {
