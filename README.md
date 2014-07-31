@@ -8,7 +8,7 @@
 
 ## Working with proxies
 * Set the HTTP_PROXY_IP_AND_PORT if you have a proxy in between.
-  Ex: HTTP_PROXY_IP_AND_PORT=11.12.13.14:8138
+  Ex: HTTP_PROXY_IP_AND_PORT=http://11.12.13.14:8138
 
 ## Commandline
 
