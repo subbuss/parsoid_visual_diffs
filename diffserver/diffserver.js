@@ -40,6 +40,8 @@ try {
 	return;
 }
 
+var baseDir = settings.outdir.slice().replace("\/$", "");
+
 // Make an app
 var app = express.createServer();
 
@@ -60,11 +62,12 @@ app.get(/^\/diff\/([^/]*)\/(.*)/, function(req, res) {
 		oldId = req.query.oldId,
 		logger = settings.quiet ? function(){} : function(msg) { console.log(msg); };
 
-       var baseDir = settings.outdir;
-	settings.wiki = wiki;
-	settings.title = title;
-	settings = Util.computeOpts(settings);
-	Differ.genVisualDiff(settings, logger,
+	// Clone before modifying it!
+	var opts = Util.clone(settings);
+	opts.wiki = wiki;
+	opts.title = title;
+	opts = Util.computeOpts(opts);
+	Differ.genVisualDiff(opts, logger,
 		function(err, diffData) {
 			if (err) {
 				console.error("ERROR for " + wiki + ':' + title + ': ' + err);
@@ -76,7 +79,7 @@ app.get(/^\/diff\/([^/]*)\/(.*)/, function(req, res) {
 			// Dump diff
 			var png_data = diffData.getImageDataUrl("").replace(/^data:image\/png;base64,/, '');
 			var png_buffer = new Buffer(png_data, 'base64');
-			fs.writeFileSync(settings.diffFile, png_buffer);
+			fs.writeFileSync(opts.diffFile, png_buffer);
 
 			// HTML
 			var pageTitle = "Visual diff for " + wiki + ":" + title;
@@ -87,9 +90,9 @@ app.get(/^\/diff\/([^/]*)\/(.*)/, function(req, res) {
 			page += "<ul>";
 			// Set up relative links.
 			// -- walk 2 levels up (/diff/wikiprefix/) to set up the right urls.
-			page += "<li><a href='../../" + settings.phpScreenShot.replace(baseDir, "pngs") + "'>PHP parser Screenshot</a></li>";
-			page += "<li><a href='../../" + settings.psdScreenShot.replace(baseDir, "pngs") + "'>Parsoid Screenshot</a></li>";
-			page += "<li><a href='../../" + settings.diffFile.replace(baseDir, "pngs") + "'>Visual Diff</a></li>";
+			page += "<li><a href='../../" + opts.phpScreenShot.replace(baseDir, "pngs") + "'>PHP parser Screenshot</a></li>";
+			page += "<li><a href='../../" + opts.psdScreenShot.replace(baseDir, "pngs") + "'>Parsoid Screenshot</a></li>";
+			page += "<li><a href='../../" + opts.diffFile.replace(baseDir, "pngs") + "'>Visual Diff</a></li>";
 			page += "</ul></body>";
 			page += "</html>";
 
