@@ -96,5 +96,6 @@ app.get(/^\/diff\/([^/]*)\/(.*)/, function(req, res) {
 
 // Start the app
 app.listen( argv.port );
+console.log( "Listening on port: " + argv.port );
 
 }() );
