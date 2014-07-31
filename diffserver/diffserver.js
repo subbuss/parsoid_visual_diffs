@@ -44,7 +44,7 @@ try {
 var app = express.createServer();
 
 // Declare static directory
-app.use("/" + settings.outdir, express.static(__dirname + "/" + settings.outdir));
+app.use("/pngs", express.static(__dirname + "/pngs"));
 
 // Add in the bodyParser middleware (because it's pretty standard)
 app.use( express.bodyParser() );
@@ -60,6 +60,7 @@ app.get(/^\/diff\/([^/]*)\/(.*)/, function(req, res) {
 		oldId = req.query.oldId,
 		logger = settings.quiet ? function(){} : function(msg) { console.log(msg); };
 
+       var baseDir = settings.outdir;
 	settings.wiki = wiki;
 	settings.title = title;
 	settings = Util.computeOpts(settings);
@@ -84,9 +85,11 @@ app.get(/^\/diff\/([^/]*)\/(.*)/, function(req, res) {
 			page += "<body>";
 			page += "<h1>" + pageTitle + "</h1>";
 			page += "<ul>";
-			page += "<li><a href='/" + settings.phpScreenShot + "'>PHP parser Screenshot</a></li>";
-			page += "<li><a href='/" + settings.psdScreenShot + "'>Parsoid Screenshot</a></li>";
-			page += "<li><a href='/" + settings.diffFile + "'>Visual Diff</a></li>";
+			// Set up relative links.
+			// -- walk 2 levels up (/diff/wikiprefix/) to set up the right urls.
+			page += "<li><a href='../../" + settings.phpScreenShot.replace(baseDir, "pngs") + "'>PHP parser Screenshot</a></li>";
+			page += "<li><a href='../../" + settings.psdScreenShot.replace(baseDir, "pngs") + "'>Parsoid Screenshot</a></li>";
+			page += "<li><a href='../../" + settings.diffFile.replace(baseDir, "pngs") + "'>Visual Diff</a></li>";
 			page += "</ul></body>";
 			page += "</html>";
 
