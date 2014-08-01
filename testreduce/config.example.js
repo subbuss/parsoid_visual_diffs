@@ -22,7 +22,13 @@ if ( typeof module === 'object' ) {
 			wiki: "enwiki",
 			title: "Main_Page",
 			filePrefix: null,
-			outdir: null
+			outdir: null,
+			// resemblejs options
+			errorType: "flat",
+			// Skip pixels on all images bigger than this dimension on any side
+			// Clients don't generate diff images, so better to do it more
+			// efficiently.
+			largeImageThreshold: 1000
 		}
 	};
 }

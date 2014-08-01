@@ -25,6 +25,9 @@ if (opts !== null) {
 	var phpSS = indir + prefix + ".php.png";
 	var psdSS = indir + prefix + ".parsoid.png";
 
+	if (opts.outputSettings) {
+		resemble.outputSettings(opts.outputSettings);
+	}
 	resemble(opts.phpScreenShot).compareTo(opts.psdScreenShot).
 		ignoreAntialiasing(). // <-- muy importante
 		onComplete(function(data){

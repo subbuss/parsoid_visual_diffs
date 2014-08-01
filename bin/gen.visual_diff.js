@@ -1,7 +1,6 @@
 "use strict";
 
-var resemble = require('resemble').resemble,
-	fs = require('fs'),
+var fs = require('fs'),
 	Util = require('../lib/differ.utils.js').Util,
 	Differ = require('../lib/differ.js').VisualDiffer;
 

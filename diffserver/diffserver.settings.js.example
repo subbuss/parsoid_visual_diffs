@@ -10,6 +10,9 @@ if ( typeof module === 'object' ) {
 		title: "Main_Page",
 		filePrefix: null,
 		quiet: true,
-		outdir: "pngs"
+		outdir: "pngs",
+		// resemblejs options
+		errorType: "movement", // Better error display for making sense of diffs
+		largeImageThreshold: 0 // Cleaner diff without the skipped pixels grid
 	};
 }
