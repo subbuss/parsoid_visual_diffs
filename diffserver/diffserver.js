@@ -71,8 +71,7 @@ app.get(/^\/diff\/([^/]*)\/(.*)/, function(req, res) {
 		function(err, diffData) {
 			if (err) {
 				console.error("ERROR for " + wiki + ':' + title + ': ' + err);
-				res.setHeader("Encountered error " + err + " for " + wiki + ":" + title);
-				res.send("", 500);
+				res.send("Encountered error [" + err + "] for " + wiki + ":" + title, 500);
 				return;
 			}
 
