@@ -143,7 +143,7 @@ var runTest = function(cb, test) {
 	} catch (err) {
 		console.error( "ERROR in " + test.prefix + ':' + test.title + ': ' + err );
 		console.error( "stack trace: " + err.stack);
-		cb( 'postResult', jsonFormat(opts, err), test, function() { process.exit( 1 ); } );
+		cb( 'postResult', jsonFormat(opts, err), test, null );
 	}
 };
 
