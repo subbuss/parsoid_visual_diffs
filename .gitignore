@@ -1,3 +1,5 @@
 diffserver/pngs/
 diffserver/diffserver.settings.js
 node_modules
+*wiki/
+.DS_Store
