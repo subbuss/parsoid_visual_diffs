@@ -15,6 +15,11 @@ var customOpts = {
 		'boolean': false,
 		'default': 1080
 	},
+	'dumpPhpHTML': {
+		description: "Dump PHP HTML after wrappers have been adjusted",
+		'boolean': true,
+		'default': false
+	},
 	'dumpParsoidHTML': {
 		description: "Dump Parsoid HTML after wrappers have been adjusted",
 		'boolean': true,
