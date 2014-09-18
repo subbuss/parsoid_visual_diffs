@@ -1,0 +1,32 @@
+enwiki: |
+    span.reference { 
+        line-height: 1; 
+        font-size: 80%;
+    }
+    sup,sub { line-height:1; } 
+    body.mw-body { padding: 1.25em 1.5em 1.5em 1.5em; }
+
+    /* XXX: not quite working yet (icond doesn't load) */
+    .mw-body a[rel="mw:ExtLink"],
+    .mw-body a[href^="http"] {
+        background: url("//upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png") no-repeat right;
+        padding-right: 13px;
+    }
+    /* Change the external link icon to an Adobe icon for all PDF files
+    in browsers that support these CSS selectors, like Mozilla and Opera */
+    .mw-body a[href$=".pdf"].external,
+    .mw-body a[href*=".pdf?"].external,
+    .mw-body a[href*=".pdf#"].external,
+    .mw-body a[href$=".PDF"].external,
+    .mw-body a[href*=".PDF?"].external,
+    .mw-body a[href*=".PDF#"].external {
+        background: url("//upload.wikimedia.org/wikipedia/commons/2/23/Icons-mini-file_acrobat.gif") no-repeat right;
+        padding-right: 18px;
+    }
+
+    /* Change the external link icon to an Adobe icon anywhere the PDFlink class
+    is used (notably Template:PDFlink). This works in IE, unlike the above. */
+    .mw-body span.PDFlink a {
+        background: url("//upload.wikimedia.org/wikipedia/commons/2/23/Icons-mini-file_acrobat.gif") no-repeat right;
+        padding-right: 18px;
+    }
