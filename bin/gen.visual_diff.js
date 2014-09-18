@@ -20,8 +20,18 @@ var customOpts = {
 		'boolean': true,
 		'default': false
 	},
+	'dumpPhpCSS': {
+		description: "Dump computed PHP CSS (in a <script> element in the <head>)",
+		'boolean': true,
+		'default': false
+	},
 	'dumpParsoidHTML': {
 		description: "Dump Parsoid HTML after wrappers have been adjusted",
+		'boolean': true,
+		'default': false
+	},
+	'dumpParsoidCSS': {
+		description: "Dump computed Parsoid CSS (in a <script> element in the <head>)",
 		'boolean': true,
 		'default': false
 	},
