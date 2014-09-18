@@ -1,12 +1,13 @@
 {
-	"name": "visual_diffs",
-	"description": "Visual Diffs for Parsoid",
-	"version": "0.0.1",
-	"dependencies": {
-		"express": "~2.5.11",
-		"phantom": "x.x",
-		"phantomjs": "~1.9",
-		"resemble" : "git+https://github.com/subbuss/node-resemble.git#master",
-		"yargs": "~1.2.1"
-	}
+  "name": "visual_diffs",
+  "description": "Visual Diffs for Parsoid",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "~2.5.11",
+    "libyaml": "^0.2.5",
+    "phantom": "x.x",
+    "phantomjs": "~1.9",
+    "resemble": "git+https://github.com/subbuss/node-resemble.git#master",
+    "yargs": "~1.2.1"
+  }
 }
