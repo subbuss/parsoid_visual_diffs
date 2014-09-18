@@ -19,7 +19,7 @@ var opts = yargs.usage( 'Usage: $0 [connection parameters]' )
 	} )
 	.options( 'P', {
 		alias: 'port',
-		'default': 8001,
+		'default': 8002,
 		describe: 'Port number to use for connection.'
 	} );
 
