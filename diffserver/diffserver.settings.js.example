@@ -3,6 +3,7 @@
 if ( typeof module === 'object' ) {
 	module.exports = {
 		parsoidServer: "http://localhost:8000",
+		stylesYamlFile: "<full-path-to-visual-diff-repo>/styles.yaml",
 		viewportWidth: 1920,
 		viewportHeight: 1080,
 		dumpParsoidHTML: false,

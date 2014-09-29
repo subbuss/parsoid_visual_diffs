@@ -35,6 +35,11 @@ var customOpts = {
 		'boolean': true,
 		'default': false
 	},
+	'stylesYamlFile': {
+		description: "YAML file containing custom CSS",
+		'boolean': false,
+		'default': "../styles.yaml"
+	}
 };
 
 var opts = Util.getopts(customOpts);
