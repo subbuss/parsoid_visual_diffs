@@ -1,6 +1,6 @@
 enwiki: |
-    // Some of these tweaks will probably be part of ext.cite.style.css
-    // Rest will be specific to enwiki and will be part of enwiki's common.css
+    /* Some of these tweaks will probably be part of ext.cite.style.css
+       Rest will be specific to enwiki and will be part of enwiki's common.css */
     span.mw-ref {
         line-height: 1;
         font-size: 80%;
@@ -38,7 +38,7 @@ enwiki: |
         padding-right: 13px;
     }
     /* Change the external link icon to an Adobe icon for all PDF files
-    in browsers that support these CSS selectors, like Mozilla and Opera */
+       in browsers that support these CSS selectors, like Mozilla and Opera */
     .mw-body a[href$=".pdf"].external,
     .mw-body a[href*=".pdf?"].external,
     .mw-body a[href*=".pdf#"].external,
