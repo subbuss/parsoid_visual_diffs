@@ -1,4 +1,6 @@
 enwiki: |
+	// Some of these tweaks will probably be part of ext.cite.style.css
+	// Rest will be specific to enwiki and will be part of enwiki's common.css
     span.mw-ref {
         line-height: 1; 
         font-size: 80%;
@@ -6,10 +8,32 @@ enwiki: |
     sup,sub { line-height:1; } 
     body.mw-body { padding: 1.25em 1.5em 1.5em 1.5em; }
 
-    /* XXX: not quite working yet (icond doesn't load) */
+    [rel="mw:referencedBy"]::before {
+        content: "^ ";
+    }
+
+    [rel="mw:referencedBy"] {
+        counter-reset: mw-ref-linkback 0;
+    }
+
+    ol[data-mw-group="lower-alpha"].mw-references li {
+		list-style-type: lower-alpha;
+	}
+
+    span[rel="mw:referencedBy"] a::before {
+        content: counter(mw-ref-linkback, lower-alpha);
+        font-style: italic;
+        font-weight: bold;
+        font-size: 80%;
+    }
+
+    span[rel="mw:referencedBy"] a::after {
+        content: ' ';
+    }
+
     .mw-body a[rel="mw:ExtLink"],
     .mw-body a[href^="http"] {
-        background: url("//upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png") no-repeat right;
+        background: url("https://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png") no-repeat right;
         padding-right: 13px;
     }
     /* Change the external link icon to an Adobe icon for all PDF files
@@ -20,13 +44,13 @@ enwiki: |
     .mw-body a[href$=".PDF"].external,
     .mw-body a[href*=".PDF?"].external,
     .mw-body a[href*=".PDF#"].external {
-        background: url("//upload.wikimedia.org/wikipedia/commons/2/23/Icons-mini-file_acrobat.gif") no-repeat right;
+        background: url("https://upload.wikimedia.org/wikipedia/commons/2/23/Icons-mini-file_acrobat.gif") no-repeat right;
         padding-right: 18px;
     }
 
     /* Change the external link icon to an Adobe icon anywhere the PDFlink class
     is used (notably Template:PDFlink). This works in IE, unlike the above. */
     .mw-body span.PDFlink a {
-        background: url("//upload.wikimedia.org/wikipedia/commons/2/23/Icons-mini-file_acrobat.gif") no-repeat right;
+        background: url("https://upload.wikimedia.org/wikipedia/commons/2/23/Icons-mini-file_acrobat.gif") no-repeat right;
         padding-right: 18px;
     }
