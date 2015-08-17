@@ -1,5 +1,5 @@
 enwiki: |
-    span.reference { 
+    span.mw-ref {
         line-height: 1; 
         font-size: 80%;
     }
