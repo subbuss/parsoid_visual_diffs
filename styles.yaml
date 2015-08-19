@@ -32,6 +32,13 @@ enwiki: |
         content: ' ';
     }
 
+    /* No background for plainlinks */
+    .plainlinks a[rel="mw:ExtLink"],
+    .plainlinks a[href^="http"] {
+        background:none !important;
+        padding:0 !important
+    }
+
     .mw-body a[rel="mw:ExtLink"],
     .mw-body a[href^="http"] {
         background: url("https://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png") no-repeat right;
