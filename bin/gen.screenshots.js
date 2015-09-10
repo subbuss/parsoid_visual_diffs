@@ -14,11 +14,6 @@ var customOpts = {
 		'boolean': false,
 		'default': 1080
 	},
-	'dumpParsoidHTML': {
-		description: "Dump Parsoid HTML after wrappers have been adjusted",
-		'boolean': true,
-		'default': false
-	},
 	'stylesYamlFile': {
 		description: "YAML file containing custom CSS",
 		'boolean': false,

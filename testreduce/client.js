@@ -156,15 +156,15 @@ var getGitCommit = function( cb ) {
 	if ( !lastCommitCheck || ( now - lastCommitCheck ) > ( 5 * 60 * 1000 ) ) {
 		lastCommitCheck = now;
 		var opts = Util.clone(config.opts);
-		var psdServer = Util.computeOpts(opts).parsoidServer;
+		var parsoidServer = Util.computeOpts(opts).html2Server;
 		var requestOptions = {
-			uri: psdServer + "_version",
+			uri: parsoidServer + "_version",
 			proxy: process.env.HTTP_PROXY_IP_AND_PORT || "",
 			method: 'GET'
 		};
 		Util.retryingHTTPRequest(10, requestOptions, function(error, response, body) {
 			if (error || !response) {
-				console.log("Error couldn't find the current commit from " + psdServer);
+				console.log("Error couldn't find the current commit from " + parsoidServer);
 				cb(null, null);
 			} else if (response.statusCode === 200) {
 				try {

@@ -12,7 +12,7 @@ var customOpts = {
 	},
 	'fileprefix': {
 		description: 'Prefix of files to get screenshots from and output diffs to?' +
-			'(default:  <title>.parsoid.png, <title>.php.png, <title>.diff.png)',
+			'(default:  <title>.<name2>.png, <title>.<name1>.png, <title>.diff.png)',
 		'boolean': false,
 		'default': null
 	}
@@ -22,13 +22,11 @@ var opts = Util.getopts(customOpts);
 if (opts !== null) {
 	var prefix = opts.prefix;
 	var indir = (opts.indir || ".").replace(/\/$/, '') + "/" + opts.wiki + "/";
-	var phpSS = indir + prefix + ".php.png";
-	var psdSS = indir + prefix + ".parsoid.png";
 
 	if (opts.outputSettings) {
 		resemble.outputSettings(opts.outputSettings);
 	}
-	resemble(opts.phpScreenShot).compareTo(opts.psdScreenShot).
+	resemble(opts.html1.screenShot).compareTo(opts.html2.screenShot).
 		ignoreAntialiasing(). // <-- muy importante
 		onComplete(function(data){
 		    // analysis stats
