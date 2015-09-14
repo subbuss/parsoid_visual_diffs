@@ -1,0 +1,20 @@
+// These defaults are for visual diff comparison of
+// PHP parser and Parsoid HTML output.
+module.exports = {
+  stylesYamlFile": "../styles.yaml,
+  html1: {
+    name: "php",
+    postprocessorScript: "../lib/php_parser.postprocess.js",
+    dumpHTML: false,
+    dumpCSS: false,
+    injectJQuery: false,
+  },
+  html2: {
+    name: "parsoid",
+    postprocessorScript: "../lib/parsoid.postprocess.js",
+    dumpHTML: false,
+    dumpCSS: false,
+    server: "http://localhost:8000/",
+    injectJQuery: true,
+  },
+};
