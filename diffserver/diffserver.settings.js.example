@@ -1,22 +1,21 @@
-"use strict";
+'use strict';
 
 if (typeof module === 'object') {
 	module.exports = {
-		stylesYamlFile: "<full-path-to-visual-diff-repo>/styles.yaml",
 		viewportWidth: 1920,
 		viewportHeight: 1080,
 
-		wiki: "enwiki",
-		title: "Main_Page",
+		wiki: 'enwiki',
+		title: 'Main_Page',
 		filePrefix: null,
 		quiet: true,
-		outdir: "pngs",
+		outdir: 'pngs',
 
 		// HTML1 generator options
 		html1: {
 			name: 'php',
 			dumpHTML: false,
-			postprocessorScript: "../lib/php_parser.postprocess.js",
+			postprocessorScript: '../lib/php_parser.postprocess.js',
 			injectJQuery: false,
 		},
 		// HTML2 generator options
@@ -24,12 +23,13 @@ if (typeof module === 'object') {
 			name: 'parsoid',
 			server: 'http://localhost:8000',
 			dumpHTML: false,
-			postprocessorScript: "../lib/parsoid.postprocess.js",
+			postprocessorScript: '../lib/parsoid.postprocess.js',
+			stylesYamlFile: '../lib/parsoid.custom_styles.yaml',
 			injectJQuery: true,
 		},
 		// resemblejs options
 		outputSettings: {
-			errorType: "movement", // Better error display for making sense of diffs
+			errorType: 'movement', // Better error display for making sense of diffs
 			largeImageThreshold: 0 // Cleaner diff without the skipped pixels grid
 		},
 	};
