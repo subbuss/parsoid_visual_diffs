@@ -26,8 +26,11 @@ OR this script
 ## Examples
 
 ``` bash
+# Compare rendering of two existing HTML files (on the web)
+$ node gen.visual_diff.js --outdir /tmp/ --url1 http://en.wikipedia.org/wiki/Hampi --url2 http://en.wikipedia.org/wiki/Hospet
+
 # Compare rendering of two existing HTML files
-$ node gen.visual_diff.js --outdir /tmp/ --url1 file://`pwd`/enwiki/Hampi.php.html --url2 file://`pwd`/enwiki/Hampi.parsoid.html
+$ node gen.visual_diff.js --outdir /tmp/ --url1 enwiki/Hampi.php.html --url2 enwiki/Hampi.parsoid.html
 
 # Fetch PHP parser and Parsoid HTML output from their servers and compare them (read config from a config file)
 $ node gen.visual_diff.js --wiki itwiki --title Luna --config parsoid.diffsettings.js
