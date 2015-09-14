@@ -89,8 +89,8 @@ app.get(/^\/diff\/([^/]*)\/(.*)/, function(req, res) {
 			page += "<ul>";
 			// Set up relative links.
 			// -- walk 2 levels up (/diff/wikiprefix/) to set up the right urls.
-			page += "<li><a href='../../" + opts.html1.screenShot.replace(baseDir, "pngs") + "'>" + opts.html1.source + " Screenshot</a></li>";
-			page += "<li><a href='../../" + opts.html2.screenShot.replace(baseDir, "pngs") + "'>" + opts.html2.source + " Screenshot</a></li>";
+			page += "<li><a href='../../" + opts.html1.screenShot.replace(baseDir, "pngs") + "'>" + opts.html1.name + " Screenshot</a></li>";
+			page += "<li><a href='../../" + opts.html2.screenShot.replace(baseDir, "pngs") + "'>" + opts.html2.name + " Screenshot</a></li>";
 			page += "<li><a href='../../" + opts.diffFile.replace(baseDir, "pngs") + "'>Visual Diff</a></li>";
 			page += "</ul></body>";
 			page += "</html>";
