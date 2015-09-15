@@ -40,6 +40,13 @@ $ node gen.visual_diff.js --wiki itwiki --title Luna --config parsoid.diffsettin
 $ node gen.visual_diff.js --wiki enwiki --title Hampi --html1PP ../lib/php_parser.postprocess.js --html2PP ../lib/parsoid.postprocess.js --dumpHTML1 --dumpHTML2
 ```
 
+The <code>bin/examples</code> directory has a sample enwiki titles list and a bunch of example config files for 3 different use cases
+* parsoid.php.diffsettings.js for comparing PHP parser output against Parsoid output
+* batching.diffsettings.js for comparing Parsoid output without use of the Parsoid batching API against Parsoid output that uses the parsoid batching API
+* php_output.diffsettings.js sample file (incomplete) for some use case that might compare PHP parser output in 2 different configurations
+
+bin/examples directory also provides a rundiffs.sh script for generating diffs on a bunch of titles (provided in a file as a CLI arg) and run with a CLI-provided config file.
+
 ## Testreduce client
 
 testreduce/ has client scripts and example config for mass testing
