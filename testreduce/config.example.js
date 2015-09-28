@@ -3,7 +3,7 @@
  *
  * Copy this file to config.js and change the values as needed.
  */
-"use strict";
+'use strict';
 
 if ( typeof module === 'object' ) {
 	module.exports = {
@@ -15,20 +15,34 @@ if ( typeof module === 'object' ) {
 			port: 8002
 		},
 		opts: {
-			parsoidServer: "http://localhost:8000",
 			viewportWidth: 1920,
 			viewportHeight: 1080,
-			dumpParsoidHTML: false,
-			wiki: "enwiki",
-			title: "Main_Page",
+
+			wiki: 'enwiki',
+			title: 'Main_Page',
 			filePrefix: null,
 			outdir: null,
+
+			html1: {
+				name: 'php',
+				dumpHTML: false,
+				postprocessorScript: '../lib/php_parser.postprocess.js',
+				injectJQuery: false,
+			},
+			// HTML2 generator options
+			html2: {
+				name: 'parsoid',
+				server: 'http://localhost:8000',
+				dumpHTML: false,
+				postprocessorScript: '../lib/parsoid.postprocess.js',
+				stylesYamlFile: '../lib/parsoid.custom_styles.yaml',
+				injectJQuery: true,
+			},
 			// resemblejs options
-			errorType: "flat",
-			// Skip pixels on all images bigger than this dimension on any side
-			// Clients don't generate diff images, so better to do it more
-			// efficiently.
-			largeImageThreshold: 1000
+			outputSettings: {
+				errorType: 'flag',
+				largeImageThreshold: 1000,
+			},
 		}
 	};
 }

@@ -6,8 +6,8 @@ module.exports = {
   // This runs locally right now.
   html1: {
     name: 'batching',
-    stylesYamlFile: '../../lib/parsoid.custom_styles.yaml',
-    postprocessorScript: '../../lib/parsoid.postprocess.js',
+    stylesYamlFile: '../lib/parsoid.custom_styles.yaml',
+    postprocessorScript: '../lib/parsoid.postprocess.js',
     server: 'http://localhost:8000/',
     injectJQuery: true,
     computeURL: function(server, wiki, title) {
@@ -20,8 +20,8 @@ module.exports = {
   // (could also instead point to the RESTBase api and use a different computeURL fn).
   html2: {
     name: 'no-batching',
-    stylesYamlFile: '../../lib/parsoid.custom_styles.yaml',
-    postprocessorScript: '../../lib/parsoid.postprocess.js',
+    stylesYamlFile: '../lib/parsoid.custom_styles.yaml',
+    postprocessorScript: '../lib/parsoid.postprocess.js',
     server: 'http://parsoid-lb.eqiad.wikimedia.org/',
     injectJQuery: true,
     computeURL: function(server, wiki, title) {
