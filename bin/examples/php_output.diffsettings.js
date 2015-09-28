@@ -1,7 +1,7 @@
 module.exports = {
   html1: {
     name: 'php1',
-    postprocessorScript: '../../lib/php_parser.postprocess.js',
+    postprocessorScript: '../lib/php_parser.postprocess.js',
     injectJQuery: false,
     // server:
     //
@@ -14,7 +14,7 @@ module.exports = {
   },
   html2: {
     name: 'php2',
-    postprocessorScript: '../../lib/php_parser.postprocess.js',
+    postprocessorScript: '../lib/php_parser.postprocess.js',
     injectJQuery: false,
     // server:
   },
