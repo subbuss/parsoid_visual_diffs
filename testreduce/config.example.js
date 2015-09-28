@@ -40,7 +40,7 @@ if ( typeof module === 'object' ) {
 			},
 			// resemblejs options
 			outputSettings: {
-				errorType: 'flag',
+				errorType: 'flat',
 				largeImageThreshold: 1000,
 			},
 		}
