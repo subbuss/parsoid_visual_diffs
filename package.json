@@ -7,7 +7,7 @@
     "libyaml": "^0.2.5",
     "phantom": "x.x",
     "phantomjs": "~1.9",
-    "resemble": "~1.2.1",
+    "resemble": "git+https://github.com/subbuss/node-resemble.git#master",
     "yargs": "~1.2.1"
   }
 }
