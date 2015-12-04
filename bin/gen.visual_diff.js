@@ -30,11 +30,6 @@ if (opts !== null) {
 		if (!err) {
 			// analysis stats
 			console.error("STATS: " + JSON.stringify(data));
-
-			// Save the base64 data
-			var png_data = data.getImageDataUrl("").replace(/^data:image\/png;base64,/, '');
-			var png_buffer = new Buffer(png_data, 'base64');
-			fs.writeFileSync(opts.diffFile, png_buffer);
 		}
 	});
 }
