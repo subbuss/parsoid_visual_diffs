@@ -27,10 +27,19 @@ if (typeof module === 'object') {
 			stylesYamlFile: '../lib/parsoid.custom_styles.yaml',
 			injectJQuery: true,
 		},
+
+		// Engine for image diffs, may be resemble or uprightdiff
+		diffEngine: 'resemble',
+
 		// resemblejs options
-		outputSettings: {
+		resembleSettings: {
 			errorType: 'movement', // Better error display for making sense of diffs
 			largeImageThreshold: 0 // Cleaner diff without the skipped pixels grid
+		},
+
+		// UprightDiff options
+		uprightDiffSettings: {
+			binary: '/usr/bin/uprightdiff'
 		},
 	};
 }
