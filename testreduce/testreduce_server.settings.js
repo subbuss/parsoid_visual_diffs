@@ -49,7 +49,7 @@ module.exports = {
 
 	generateTitleUrl: function(server, prefix, title) {
 		return server.replace(/\/$/, '') + "/diff/" + prefix + "/" + title;
-	}
+	},
 
 	parsoidRTConfig: require('./server.visualdiff.js').parsoidRTConfig,
 };
