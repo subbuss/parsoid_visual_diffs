@@ -14,11 +14,11 @@ function generateVisualDiff(opts, test) {
 			opts = Util.computeOpts(opts);
 
 			var logger = opts.quiet ? function(){} : function(msg) { console.log(msg); };
-			logger("Diffing " + test.prefix + ":" + test.title);
+			logger('Diffing ' + test.prefix + ':' + test.title);
 			Differ.genVisualDiff(opts, logger,
 				function(err, diffData) {
 					if (err) {
-						console.error( "ERROR for " + test.prefix + ':' + test.title + ': ' + err );
+						console.error( 'ERROR for ' + test.prefix + ':' + test.title + ': ' + err );
 						reject(err);
 					} else {
 						resolve(diffData);
@@ -26,44 +26,51 @@ function generateVisualDiff(opts, test) {
 				}
 			);
 		} catch (err) {
-			console.error( "ERROR in " + test.prefix + ':' + test.title + ': ' + err );
-			console.error( "stack trace: " + err.stack);
+			console.error( 'ERROR in ' + test.prefix + ':' + test.title + ': ' + err );
+			console.error( 'stack trace: ' + err.stack);
 			reject(err);
 		}
 	});
 }
 
-function gitCommitFetch(opts, cb) {
+function gitCommitFetch(opts) {
 	opts = Util.clone(opts);
 	var parsoidServer = Util.computeOpts(opts).html2.server;
 	var requestOptions = {
-		uri: parsoidServer + "_version",
-		proxy: process.env.HTTP_PROXY_IP_AND_PORT || "",
+		uri: parsoidServer + '_version',
+		proxy: process.env.HTTP_PROXY_IP_AND_PORT || '',
 		method: 'GET'
 	};
-	Util.retryingHTTPRequest(10, requestOptions, function(error, response, body) {
-		if (error || !response) {
-			console.log("Error couldn't find the current commit from " + parsoidServer);
-			cb(null, null);
-		} else if (response.statusCode === 200) {
-			try {
-				var resp = JSON.parse( body );
-				var lastCommit = resp.sha;
-				var lastCommitTime = (new Date()).toISOString();
-				cb(lastCommit, lastCommitTime);
-			} catch (e) {
-				console.log("Got response: " + body + " from " + requestOptions.uri);
-				console.log("Error extracing commit SHA from it: " + e);
-				cb(null, null);
+
+	return new Promise(function(resolve, reject) {
+		Util.retryingHTTPRequest(10, requestOptions, function(error, response, body) {
+			var err;
+			if (error || !response) {
+				err = 'Error could not find the current commit from ' + parsoidServer;
+				console.log(err);
+				reject(err);
+			} else if (response.statusCode === 200) {
+				try {
+					var resp = JSON.parse(body);
+					var lastCommit = resp.sha;
+					var lastCommitTime = (new Date()).toISOString();
+					resolve([lastCommit, lastCommitTime]);
+				} catch (e) {
+					err = 'Got response: ' + body + ' from ' + requestOptions.uri;
+					err = err + '\nError extracing commit SHA from it: ' + e;
+					console.log(err);
+					reject(err);
+				}
+			} else {
+				err = requestOptions.uri + ' responded with a HTTP status ' + response.statusCode;
+				console.log(err);
+				reject(err);
 			}
-		} else {
-			console.log(requestOptions.uri + " responded with a HTTP status " + response.statusCode);
-			cb(null, null);
-		}
+		});
 	});
 }
 
-if ( typeof module === 'object' ) {
+if (typeof module === 'object') {
 	module.exports.gitCommitFetch = gitCommitFetch;
 	module.exports.generateVisualDiff = generateVisualDiff;
 }
